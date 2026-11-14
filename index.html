@@ -1,1 +1,319 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+<title>NEXORA AI — Crie sem limites</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#080b14;
+--panel:#101625;
+--panel2:#151e30;
+--blue:#398bff;
+--text:#f4f7ff;
+--muted:#8995aa;
+--border:#222e43;
+}
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,Arial,sans-serif;
+min-height:100vh;
+}
+button{cursor:pointer;font:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{
+width:255px;background:#0c1120;
+border-right:1px solid var(--border);
+padding:25px 17px;
+display:flex;flex-direction:column;
+}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--blue)}
+.tagline{font-size:11px;color:var(--muted);margin-top:5px}
+.new{
+margin:30px 0 25px;padding:13px;
+border:1px solid #315c9b;background:#142747;
+color:white;border-radius:11px;
+}
+.section{font-size:10px;color:var(--muted);
+letter-spacing:1.5px;margin:20px 10px 10px}
+.nav{
+width:100%;padding:12px;
+border:0;background:transparent;color:#aebbd0;
+text-align:left;border-radius:9px;margin:3px 0;
+}
+.nav:hover,.nav.active{background:#19253a;color:white}
+.nav.active{border-left:3px solid var(--blue)}
+.profile{
+margin-top:auto;padding:13px;
+border:1px solid var(--border);border-radius:12px;
+font-size:12px;color:var(--muted)
+}
+.main{flex:1;min-width:0}
+.topbar{
+height:70px;border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 30px;
+}
+.status{color:#65dba1;font-size:12px}
+.credit{
+border:1px solid var(--border);padding:9px 13px;
+border-radius:9px;font-size:12px;color:#cbd7eb
+}
+.content{max-width:1050px;margin:auto;padding:55px 30px}
+.eyebrow{
+color:#6ba8ff;font-size:12px;letter-spacing:2px;
+font-weight:bold;margin-bottom:15px
+}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.1}
+h1 span{
+background:linear-gradient(90deg,#65a8ff,#a78bfa);
+-webkit-background-clip:text;color:transparent
+}
+.subtitle{color:var(--muted);margin-top:17px;line-height:1.7}
+.cards{
+display:grid;grid-template-columns:repeat(3,1fr);
+gap:15px;margin:35px 0
+}
+.card{
+background:var(--panel);border:1px solid var(--border);
+border-radius:15px;padding:20px;
+transition:.2s;cursor:pointer;
+}
+.card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.card .emoji{font-size:27px}
+.card h3{font-size:15px;margin:15px 0 8px}
+.card p{font-size:12px;color:var(--muted);line-height:1.6}
+.chat{
+background:var(--panel);border:1px solid var(--border);
+border-radius:17px;padding:20px;
+}
+.chat h2{font-size:17px;margin-bottom:7px}
+.chat small{color:var(--muted)}
+.messages{
+min-height:110px;max-height:260px;overflow:auto;
+padding:15px 0;
+}
+.message{
+padding:12px 14px;margin:9px 0;
+border-radius:12px;background:var(--panel2);
+font-size:13px;line-height:1.6;max-width:85%;
+}
+.message.user{margin-left:auto;background:#18365f}
+.input-area{display:flex;gap:10px}
+.input-area input{
+flex:1;min-width:0;background:#080d18;
+border:1px solid var(--border);border-radius:11px;
+padding:14px;color:white;outline:none;
+}
+.input-area input:focus{border-color:var(--blue)}
+.send{
+background:var(--blue);border:0;color:white;
+padding:0 20px;border-radius:11px;font-weight:bold
+}
+.notice{
+color:var(--muted);font-size:11px;
+margin-top:12px;line-height:1.5
+}
+.footer{
+text-align:center;color:#65738a;font-size:11px;
+padding:35px
+}
+.mobile-menu{display:none}
+.page-title{font-size:30px;margin-bottom:12px}
+.hidden{display:none!important}
+@media(max-width:750px){
+.sidebar{
+position:fixed;z-index:10;left:-270px;top:0;bottom:0;
+transition:.25s
+}
+.sidebar.open{left:0}
+.mobile-menu{display:block;background:none;border:0;color:white;font-size:23px}
+.topbar{padding:0 17px}
+.content{padding:38px 17px}
+.cards{grid-template-columns:repeat(2,1fr);gap:10px}
+.card{padding:15px}
+}
+@media(max-width:400px){
+.cards{grid-template-columns:1fr}
+.credit{font-size:10px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+<div class="logo">NEXORA<span> AI</span></div>
+<div class="tagline">YOUR DIGITAL CREATION STUDIO</div>
+
+<button class="new" onclick="showPage('home')">＋ Novo projeto</button>
+
+<div class="section">PLATAFORMA</div>
+<button class="nav active" onclick="showPage('home',this)">⌂ Início</button>
+<button class="nav" onclick="showPage('games',this)">🎮 Criar jogos</button>
+<button class="nav" onclick="showPage('web',this)">🌐 Criar sites</button>
+<button class="nav" onclick="showPage('ads',this)">📢 Criar anúncios</button>
+<button class="nav" onclick="showPage('fix',this)">🔧 Corrigir projetos</button>
+
+<div class="section">EXPLORAR</div>
+<button class="nav" onclick="showPage('market',this)">🛒 Marketplace</button>
+<button class="nav" onclick="showPage('cloud',this)">☁ Hospedagem</button>
+
+<div class="profile">
+<strong style="color:white">Visitante</strong><br>
+Conta demonstrativa
+</div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:12px">
+<button class="mobile-menu" onclick="toggleMenu()">☰</button>
+<span style="font-size:13px;color:#aebbd0">Workspace / <b style="color:white">NEXORA</b></span>
+</div>
+<div class="credit">✦ Créditos: demonstração</div>
+</header>
+
+<div class="content">
+
+<section id="home">
+<div class="eyebrow">INTELIGÊNCIA ARTIFICIAL PARA CRIADORES</div>
+<h1>Transforme suas ideias<br>em <span>realidade.</span></h1>
+<p class="subtitle">
+Sua fábrica digital. Crie jogos, sites, anúncios e softwares
+com a ajuda de inteligência artificial.
+</p>
+
+<div class="cards">
+<div class="card" onclick="showPage('games')">
+<div class="emoji">🎮</div>
+<h3>Desenvolver jogos</h3>
+<p>Crie experiências 2D e 3D a partir das suas ideias.</p>
+</div>
+<div class="card" onclick="showPage('web')">
+<div class="emoji">🌐</div>
+<h3>Criar sites</h3>
+<p>Desenvolva páginas, lojas e plataformas online.</p>
+</div>
+<div class="card" onclick="showPage('ads')">
+<div class="emoji">📢</div>
+<h3>Criar anúncios</h3>
+<p>Prepare campanhas e materiais comerciais.</p>
+</div>
+<div class="card" onclick="showPage('fix')">
+<div class="emoji">🔧</div>
+<h3>Correção de projetos</h3>
+<p>Analise códigos e encontre problemas.</p>
+</div>
+<div class="card" onclick="showPage('market')">
+<div class="emoji">🛒</div>
+<h3>Marketplace</h3>
+<p>Explore jogos e projetos prontos.</p>
+</div>
+<div class="card" onclick="showPage('cloud')">
+<div class="emoji">☁</div>
+<h3>Hospedagem</h3>
+<p>Conheça nossas opções de publicação.</p>
+</div>
+</div>
+
+<div class="chat">
+<h2>✦ Converse com a NEXORA</h2>
+<small>Descreva o projeto que deseja desenvolver.</small>
+
+<div class="messages" id="messages">
+<div class="message">
+Olá! Sou a NEXORA. O que vamos construir hoje?
+</div>
+</div>
+
+<div class="input-area">
+<input id="prompt" placeholder="Ex: Crie um jogo de sobrevivência..." />
+<button class="send" onclick="sendMessage()">Enviar ➜</button>
+</div>
+<p class="notice">
+Versão inicial demonstrativa. A conexão com a inteligência artificial
+será ativada após a configuração segura do servidor.
+</p>
+</div>
+</section>
+
+<section id="other" class="hidden">
+<div class="eyebrow">NEXORA STUDIO</div>
+<h1 class="page-title" id="otherTitle">Área de criação</h1>
+<p class="subtitle" id="otherDescription"></p>
+<div class="chat" style="margin-top:30px">
+<h2>Comece seu projeto</h2>
+<p class="subtitle" style="margin:12px 0">Descreva o que deseja fazer. Esta área será conectada ao Gemini.</p>
+<button class="send" style="padding:13px 20px" onclick="showPage('home')">Voltar ao início</button>
+</div>
+</section>
+
+</div>
+
+<div class="footer">NEXORA AI © 2026 — Sua ideia. Nossa inteligência.</div>
+</main>
+</div>
+
+<script>
+const pages={
+home:["Início","Sua central de criação."],
+games:["Criar jogos","Desenvolva jogos 2D, 3D, aventuras, terror e muito mais."],
+web:["Criar sites","Crie sites profissionais, lojas virtuais e aplicações."],
+ads:["Criar anúncios","Planeje campanhas e materiais publicitários."],
+fix:["Corrigir projetos","Envie seus arquivos para uma futura análise e correção."],
+market:["Marketplace","Em breve: compre e venda jogos, templates e projetos."],
+cloud:["Hospedagem","Em breve: publique e gerencie seus projetos online."]
+};
+
+function showPage(page,button){
+document.getElementById("home").classList.toggle("hidden",page!=="home");
+document.getElementById("other").classList.toggle("hidden",page==="home");
+
+if(page!=="home"){
+document.getElementById("otherTitle").textContent=pages[page][0];
+document.getElementById("otherDescription").textContent=pages[page][1];
+}
+document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+if(button)button.classList.add("active");
+document.getElementById("sidebar").classList.remove("open");
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("open");
+}
+
+function sendMessage(){
+const input=document.getElementById("prompt");
+const value=input.value.trim();
+if(!value)return;
+
+const messages=document.getElementById("messages");
+const user=document.createElement("div");
+user.className="message user";
+user.textContent=value;
+messages.appendChild(user);
+
+const reply=document.createElement("div");
+reply.className="message";
+reply.textContent="Recebi sua ideia! A conexão com o Gemini será ativada na próxima etapa. Por enquanto, esta é uma demonstração da interface.";
+messages.appendChild(reply);
+
+input.value="";
+messages.scrollTop=messages.scrollHeight;
+}
+
+document.getElementById("prompt").addEventListener("keydown",e=>{
+if(e.key==="Enter")sendMessage();
+});
+</script>
+</body>
+</html>
+
